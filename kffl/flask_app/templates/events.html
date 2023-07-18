@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            text-align: center;
+            padding: 8px;
+        }
+
+        th {
+            background-color: rgb(221, 134, 58);
+        }
+
+        td {
+            height: 80px;
+        }
+
+        .today {
+            background-color: #ffcccc;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            var today = new Date();
+            var currentMonth = today.getMonth();
+            var currentYear = today.getFullYear();
+            var months = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            var monthYearText = months[currentMonth] + ' ' + currentYear;
+            document.getElementById('monthYear').textContent = monthYearText;
+
+            var calendarBody = document.getElementById('calendarBody');
+
+            function generateCalendar() {
+                var startDate = new Date(currentYear, currentMonth, 1);
+                var endDate = new Date(currentYear, currentMonth + 1, 0);
+                var startDay = startDate.getDay();
+                var totalDays = endDate.getDate();
+
+                var date = 1;
+                for (var row = 0; row < 6; row++) {
+                    var tableRow = document.createElement('tr');
+                    for (var col = 0; col < 7; col++) {
+                        if (row === 0 && col < startDay) {
+                            var tableCell = document.createElement('td');
+                            tableRow.appendChild(tableCell);
+                        } else if (date > totalDays) {
+                            break;
+                        } else {
+                            var tableCell = document.createElement('td');
+                            tableCell.textContent = date;
+                            if (
+                                currentYear === today.getFullYear() &&
+                                currentMonth === today.getMonth() &&
+                                date === today.getDate()
+                            ) {
+                                tableCell.classList.add('today');
+                            }
+                            tableRow.appendChild(tableCell);
+                            date++;
+                        }
+                    }
+                    calendarBody.appendChild(tableRow);
+                }
+            }
+
+            function clearCalendar() {
+                while (calendarBody.firstChild) {
+                    calendarBody.firstChild.remove();
+                }
+            }
+
+            document.getElementById('prevMonth').addEventListener('click', function () {
+                clearCalendar();
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar();
+            });
+
+            document.getElementById('nextMonth').addEventListener('click', function () {
+                clearCalendar();
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar();
+            });
+
+            generateCalendar();
+        });
+    </script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+</head>
+<div class="top" style="display: flex; justify-content: center; margin: 50px; align-items: center; text-align: center;">
+    <h1>Upcoming Events</h1>
+    <div class="nav"
+        style="display: flex; justify-content: space-between; margin: 50px; align-items: center; text-align: center;">
+    </div>
+</div>
+<div class="buttons" style="display: flex; justify-content: flex-end; margin-right: 100px;">
+    <a href="/dashboard" class="btn btn-info" style="margin-right: 10px;">Dashboard</a>
+    <a href=" /logout" class="btn btn-danger">Logout</a>
+</div>
+</div>
+
+<body style="background-color: rgb(221, 134, 58); font-family: 'Nunito', sans-serif;
+font-family: 'Open Sans', sans-serif;">
+    <div class="calendar" style="padding: 20px;">
+        <h1 id="monthYear"></h1>
+        <table>
+            <tr>
+                <th>Sun</th>
+                <th>Mon</th>
+                <th>Tue</th>
+                <th>Wed</th>
+                <th>Thu</th>
+                <th>Fri</th>
+                <th>Sat</th>
+            </tr>
+            <tbody id="calendarBody"></tbody>
+        </table>
+        <div class="buttons" style="display: flex; justify-content: space-between;">
+            <button id="prevMonth" style="background-color: rgb(208, 208, 101); height: 40px;font-family: 'Nunito', sans-serif;
+        font-family: 'Open Sans', sans-serif;">Previous Month</button>
+            <button id="nextMonth" style="background-color: rgb(72, 72, 198); height: 40px;font-family: 'Nunito', sans-serif;
+        font-family: 'Open Sans', sans-serif;">Next Month</button>
+        </div>
+    </div>
+</body>
+
+</html>

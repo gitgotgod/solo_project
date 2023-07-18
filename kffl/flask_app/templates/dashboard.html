@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;1,200;1,300;1,400&family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+    <title>Welcome</title>
+</head>
+
+<body style="background-color: rgb(221, 134, 58); font-family: Open Sans; text-align: center;">
+    <div class="top"
+        style="display: flex; justify-content: center; margin: 50px; align-items: center; text-align: center;">
+        <h1>Welcome to the KFFL, {{user.first_name}}!</h1><br>
+    </div>
+    <div class="nav"
+        style="display: flex; justify-content: flex-end; margin: 50px; align-items: center; text-align: center;">
+
+        <a href="/standings" style="margin-right: 10px; color: black;">Standings</a>
+        <a href="/events" style="margin-right: 10px; color: black;">Events</a>
+    </div>
+    <div class="buttons" style="display: flex; justify-content: flex-end; margin-right: 100px;">
+        <a href="/new/team" class="btn btn-info" style="margin-right: 10px;">Join a Team</a>
+        <a href=" /logout" class="btn btn-danger">Logout</a>
+    </div>
+    </div>
+    <div class="second" style="display: flex; justify-content: space-around; margin: 10px;">
+        <h4>A global community currently based in Seoul, South Korea</h4>
+    </div><br>
+    <div class="container" style="display: flex;">
+        <div class="body1">
+            <div class="third" style="width: 20%; margin-left: 100px;">
+                <table class="table table-striped text-center">
+                    <thead style="border: 1px solid black;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Team</th>
+                            <th>Actions</th>
+                            <th>Events</th>
+                        </tr>
+                    </thead>
+                    <tbody style="border: 1px solid black;">
+                        {% for team in teams %}
+                        <tr>
+                            <td>{{user.first_name}} {{user.last_name}}</td>
+                            <td>{{team.name}}</td>
+                            <td>
+                                <a href="/destroy/{{session.user_id}}" class="btn btn-danger">leave team</a>
+                            </td>
+                            <td>
+                                <a href="/events" class="btn btn-link" style="color: rgb(78, 71, 71);">check events</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="body2">
+            <div class="info-box">
+                <p>KFFL is the biggest flag football league that services Seoul and the Bundang area.</p>
+                <p>Going over 10 years strong, we run 2 seasons every year with an average of 6 teams per
+                    season.</p>
+                <p>We normally play 3 games every Saturday at 12:30pm, 2:00pm, and 3:30pm.</p>
+                <p>For more information please contact our KFFL Admin:</p>
+                <a href="mailto: koreaflagfootball@gmail.com">Jason Chung</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
