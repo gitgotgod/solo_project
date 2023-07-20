@@ -1,0 +1,4 @@
+Combined the login and registration page to reduce unnecessary extra pages.
+Moved events calendar to its own separate page. Events will be managed and manually edited by the owner (me).
+The team stats will also be editied manually by the owner (route is /adjust).
+Standings will only show the current standings for the registered users team - will not show standings for all teams - this will be implemented later to the main dashboard.
