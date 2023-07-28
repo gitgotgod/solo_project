@@ -1,7 +1,11 @@
 from flask import render_template,redirect,session,request, flash
 from flask_app import app
+import re
 from flask_app.models.users import User
 from flask_app.models.team import Team
+
+EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9.+_-]+@[a-zA-Z0-9._-]+\.[a-zA-Z]+$')
+
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
 
@@ -26,11 +30,13 @@ def first():
 def create_user():
     if not User.validate_user(request.form):
         return redirect('/')
+    
+    passhash = bcrypt.generate_password_hash(request.form['password'])
     data ={
         "first_name": request.form['first_name'],
         "last_name": request.form['last_name'],
         "email": request.form['email'],
-        "password": bcrypt.generate_password_hash(request.form['password']),
+        "password": passhash,
         "position": request.form['position'],
         "experience": request.form['experience']
     }
@@ -41,17 +47,21 @@ def create_user():
     return redirect('/dashboard')
 
 
-#GOOD
-
 
 #READ
 
 @app.route('/login',methods=['POST'])
 def login():
     user = User.login_email(request.form)
+    data = {'email': request.form['email']}
+    user_in_db = User.login_email(data)
+
     if not user:
         flash("Invalid email!!!!")
         return redirect('/')
+    if not bcrypt.check_password_hash(user_in_db.password, request.form['password']):
+        flash('Invalid Email or Password')
+        return redirect('/loginform')
 
     session['user_id'] = user.id
     return redirect('/dashboard')
