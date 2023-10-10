@@ -1,3 +1,5 @@
+Start of the solo project for CodingDojo
+
 Combined the login and registration page to reduce unnecessary extra pages.
 Moved events calendar to its own separate page. Events will be managed and manually edited by the owner (me).
 The team stats will also be editied manually by the owner (route is /adjust).
